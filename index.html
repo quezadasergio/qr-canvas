@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Canvas — QR Code Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <h1 class="app-title">
+        QR Canvas <span class="app-title-sep">—</span>
+        <span class="app-title-sub">QR Code Generator</span>
+      </h1>
+    </header>
+
+    <main class="app">
+      <!-- LEFT: live QR preview -->
+      <section class="preview-card" aria-label="QR Code preview">
+        <div class="preview-inner">
+          <div class="canvas-wrap">
+            <canvas id="qr-canvas" width="480" height="480"></canvas>
+          </div>
+
+          <div class="download-bar">
+            <button id="download-btn" class="download-btn" type="button">
+              <span class="download-label">Download</span>
+              <span id="download-format" class="download-format">PNG</span>
+            </button>
+            <button
+              id="download-caret"
+              class="download-caret"
+              type="button"
+              aria-haspopup="true"
+              aria-expanded="false"
+              aria-label="Choose format"
+            >
+              <svg viewBox="0 0 10 6" width="10" height="6" aria-hidden="true">
+                <path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <ul id="download-menu" class="download-menu" role="menu" hidden>
+              <li role="menuitem" data-format="png">PNG</li>
+              <li role="menuitem" data-format="jpg">JPG</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT: two stacked windows -->
+      <div class="panels">
+        <!-- TOP WINDOW: content type -->
+        <section class="window" aria-label="QR content">
+          <nav class="tabs" id="content-tabs" role="tablist">
+            <button class="tab is-active" data-tab="website" role="tab">Website</button>
+            <button class="tab" data-tab="vcard" role="tab">Digital Business Card</button>
+            <button class="tab" data-tab="text" role="tab">Text</button>
+            <button class="tab" data-tab="wifi" role="tab">WiFi</button>
+          </nav>
+
+          <div class="window-body">
+            <!-- Website -->
+            <div class="tab-panel is-active" data-panel="website">
+              <label class="field">
+                <span class="field-label">URL</span>
+                <input type="url" id="website-url" placeholder="https://example.com" />
+              </label>
+            </div>
+
+            <!-- Digital Business Card -->
+            <div class="tab-panel" data-panel="vcard">
+              <div class="grid-2">
+                <label class="field"><span class="field-label">Full Name</span><input type="text" data-vcard="fullName" /></label>
+                <label class="field"><span class="field-label">Phone Number</span><input type="tel" data-vcard="phone" /></label>
+                <label class="field"><span class="field-label">Email Address</span><input type="email" data-vcard="email" /></label>
+                <label class="field"><span class="field-label">Company Name</span><input type="text" data-vcard="company" /></label>
+                <label class="field"><span class="field-label">Work Title</span><input type="text" data-vcard="title" /></label>
+                <label class="field"><span class="field-label">Work Phone</span><input type="tel" data-vcard="workPhone" /></label>
+                <label class="field"><span class="field-label">Fax</span><input type="tel" data-vcard="fax" /></label>
+                <label class="field"><span class="field-label">Street</span><input type="text" data-vcard="street" /></label>
+                <label class="field"><span class="field-label">City</span><input type="text" data-vcard="city" /></label>
+                <label class="field"><span class="field-label">State</span><input type="text" data-vcard="state" /></label>
+                <label class="field"><span class="field-label">Country</span><input type="text" data-vcard="country" /></label>
+                <label class="field"><span class="field-label">Zip</span><input type="text" data-vcard="zip" /></label>
+                <label class="field grid-span"><span class="field-label">Website</span><input type="url" data-vcard="website" /></label>
+              </div>
+            </div>
+
+            <!-- Text -->
+            <div class="tab-panel" data-panel="text">
+              <label class="field">
+                <span class="field-label">Text</span>
+                <textarea id="text-content" rows="5" placeholder="Type anything you want to encode..."></textarea>
+              </label>
+            </div>
+
+            <!-- WiFi -->
+            <div class="tab-panel" data-panel="wifi">
+              <label class="field">
+                <span class="field-label">Network Name</span>
+                <input type="text" id="wifi-ssid" placeholder="My Network" />
+              </label>
+              <label class="checkbox-field">
+                <input type="checkbox" id="wifi-hidden" />
+                <span>Hidden</span>
+              </label>
+              <label class="field">
+                <span class="field-label">Password</span>
+                <input type="text" id="wifi-password" placeholder="••••••••" />
+              </label>
+              <fieldset class="radio-group">
+                <legend>Encryption</legend>
+                <label class="radio-field">
+                  <input type="radio" name="wifi-enc" value="nopass" />
+                  <span>None</span>
+                </label>
+                <label class="radio-field">
+                  <input type="radio" name="wifi-enc" value="WPA" checked />
+                  <span>WPA/WPA2</span>
+                </label>
+                <label class="radio-field">
+                  <input type="radio" name="wifi-enc" value="WEP" />
+                  <span>WEP</span>
+                </label>
+              </fieldset>
+            </div>
+          </div>
+        </section>
+
+        <!-- BOTTOM WINDOW: design -->
+        <section class="window" aria-label="Design">
+          <header class="window-title">Design</header>
+          <nav class="tabs tabs-sub" id="design-tabs" role="tablist">
+            <button class="tab is-active" data-tab="logo" role="tab">Logo</button>
+            <button class="tab" data-tab="colorshape" role="tab">Color and Shape</button>
+          </nav>
+
+          <div class="window-body">
+            <!-- Logo -->
+            <div class="tab-panel is-active" data-panel="logo">
+              <div class="radio-group radio-group--cards">
+                <label class="logo-option">
+                  <input type="radio" name="logo-type" value="none" checked />
+                  <span class="logo-option-body">No logo</span>
+                </label>
+                <label class="logo-option">
+                  <input type="radio" name="logo-type" value="upload" />
+                  <span class="logo-option-body">Upload a logo</span>
+                </label>
+                <label class="logo-option">
+                  <input type="radio" name="logo-type" value="scanme" />
+                  <span class="logo-option-body">"Scan me"</span>
+                </label>
+              </div>
+              <div id="logo-upload-row" class="upload-row" hidden>
+                <input type="file" id="logo-file" accept="image/*" />
+              </div>
+            </div>
+
+            <!-- Color and Shape -->
+            <div class="tab-panel" data-panel="colorshape">
+              <div class="field">
+                <span class="field-label">Dot type</span>
+                <div class="shape-options" id="shape-options">
+                  <button class="shape-btn is-active" data-shape="dots" title="Round" type="button"><span class="shape-prev shape-dots"></span></button>
+                  <button class="shape-btn" data-shape="diamond" title="Diamond" type="button"><span class="shape-prev shape-diamond"></span></button>
+                  <button class="shape-btn" data-shape="classy" title="Square" type="button"><span class="shape-prev shape-classy"></span></button>
+                  <button class="shape-btn" data-shape="rounded" title="Connected squares" type="button"><span class="shape-prev shape-rounded"></span></button>
+                  <button class="shape-btn" data-shape="square" title="Hard square" type="button"><span class="shape-prev shape-square"></span></button>
+                </div>
+              </div>
+              <div class="grid-2">
+                <label class="field color-field">
+                  <span class="field-label">QR code color</span>
+                  <input type="color" id="qr-color" value="#1F0062" />
+                </label>
+                <label class="field color-field">
+                  <span class="field-label">Background color</span>
+                  <input type="color" id="bg-color" value="#F9ECE5" />
+                </label>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- THIRD WINDOW: shareable URL -->
+        <section class="window" aria-label="Share URL">
+          <header class="window-title">Share URL</header>
+          <div class="window-body">
+            <label class="checkbox-field">
+              <input type="checkbox" id="share-embed" />
+              <span>Embedded</span>
+            </label>
+            <div class="share-row">
+              <input type="text" id="share-url" readonly aria-label="Generated URL" />
+              <button id="copy-url-btn" class="copy-btn" type="button" aria-label="Copy URL">
+                Copy
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-credit">
+      Site developed by
+      <a href="https://github.com/quezadasergio" target="_blank" rel="noopener noreferrer">quezadasergio</a>
+    </footer>
+
+    <script src="js/qrcode.js"></script>
+    <script src="js/renderer.js"></script>
+    <script src="js/download.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

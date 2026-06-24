@@ -1,0 +1,69 @@
+# Dependencias
+node_modules/
+jspm_packages/
+bower_components/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Gestores de paquetes
+.npm
+.yarn/
+.pnp.*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Variables de entorno
+.env
+.env.local
+.env.*.local
+
+# Builds y salidas
+dist/
+build/
+out/
+.cache/
+.tmp/
+tmp/
+*.min.js.map
+
+# Cobertura de pruebas
+coverage/
+.nyc_output/
+
+# Archivos del sistema operativo
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Editores e IDEs
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sublime-workspace
+*.sublime-project
+*~
+*.swp
+*.swo
+
+# Misceláneos
+.eslintcache
+.parcel-cache/
+.vercel
+.netlify

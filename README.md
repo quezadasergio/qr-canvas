@@ -211,6 +211,7 @@ This window is part of the editing interface and is therefore hidden automatical
 ```
 qr-canvas/
 ├── index.html        # Main application entry point and markup
+├── favicon.svg       # QR-style favicon
 ├── css/
 │   └── styles.css    # Interface styles, color palette, and responsive layout
 ├── js/
@@ -229,6 +230,12 @@ Contributions are welcome and appreciated. If you would like to propose an enhan
 ## License
 
 This project is distributed under the **MIT License**. See the [LICENSE](LICENSE) file for the full terms and conditions.
+
+## Live Demo
+
+Try QR Canvas online without installing anything:
+
+**[https://qr-canvas.netlify.app/](https://qr-canvas.netlify.app/)**
 
 ---
 
